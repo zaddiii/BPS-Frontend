@@ -4,8 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 
-import studentRoute from "./routes/studentRoute.js";
-import resultRoute from "./routes/resultRoute.js";
+import studentRoute from "./studentRoute.js";
+import resultRoute from "./resultRoute.js";
 
 dotenv.config();
 

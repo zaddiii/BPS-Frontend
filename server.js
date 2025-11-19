@@ -1,11 +1,10 @@
-
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { connectDB } from "./db.js";
+import { connectDB } from "./config/db.js"; // updated path
 
-import studentRoute from "./studentRoute.js";
-import resultRoute from "./resultRoute.js";
+import studentRoute from "./routes/studentRoute.js"; // updated path
+import resultRoute from "./routes/resultRoute.js";   // updated path
 
 dotenv.config();
 

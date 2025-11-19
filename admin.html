@@ -109,8 +109,6 @@
         </div>
     </div>
 
-
-<!-- SCRIPT SECTION -->
 <script>
     const loginPage = document.getElementById("loginPage");
     const dashboardPage = document.getElementById("dashboardPage");
@@ -133,7 +131,7 @@
         }
     });
 
-
+    const API_URL = "https://bps-qgmn.onrender.com";
 
     // ================================
     //  SAVE STUDENT → MongoDB API
@@ -148,11 +146,13 @@
         };
 
         try {
-            const res = await fetch("http://localhost:5000/api/students", {
+            const res = await fetch(`${API_URL}/api/students`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             });
+
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
             const result = await res.json();
 
@@ -160,16 +160,14 @@
                 alert("Student saved successfully!");
                 document.getElementById("studentForm").reset();
             } else {
-                alert("Error: " + result.error);
+                alert("Error: " + (result.error || "Unknown error"));
             }
 
         } catch (err) {
-            alert("Failed to connect to server.");
+            console.error(err);
+            alert("Failed to connect to server. Check console for details.");
         }
     });
-
-
-
 
     // ================================
     //  SAVE RESULT → MongoDB API
@@ -186,11 +184,13 @@
         };
 
         try {
-            const res = await fetch("http://localhost:5000/api/results", {
+            const res = await fetch(`${API_URL}/api/results`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             });
+
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
             const result = await res.json();
 
@@ -198,14 +198,14 @@
                 alert("Result saved successfully!");
                 document.getElementById("resultForm").reset();
             } else {
-                alert("Error: " + result.error);
+                alert("Error: " + (result.error || "Unknown error"));
             }
 
         } catch (err) {
-            alert("Failed to connect to server.");
+            console.error(err);
+            alert("Failed to connect to server. Check console for details.");
         }
     });
-
 </script>
 </body>
 </html>

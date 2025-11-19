@@ -1,18 +1,24 @@
 
-const mongoose = require("mongoose");
-require("dotenv").config(); // Load .env variables
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+dotenv.config();
 
-const connectDB = async () => {
+const client = new MongoClient(process.env.MONGO_URI);
+let db;
+
+export const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB Connected");
+    await client.connect();
+    db = client.db("BPS"); // <-- your database name
+    console.log("MongoDB connected to BPS");
   } catch (err) {
-    console.error(err.message);
+    console.error("MongoDB connection error:", err);
     process.exit(1);
   }
 };
 
-module.exports = connectDB;
+// Function to get DB instance in routes
+export const getDB = () => {
+  if (!db) throw new Error("Database not connected");
+  return db;
+};
